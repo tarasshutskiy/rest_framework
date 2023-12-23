@@ -14,13 +14,16 @@ from rest_framework.views import APIView
 
 class InfoAPIView(APIView):
     def get(self, request):
-        lst = Info.objects.all().values()
-        return Response({'posts': list(lst)})
+        info = Info.objects.all()
+        return Response({'posts': InfoSerializer(info, many=True).data})
 
     def post(self, request):
+        serializer = InfoSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+
         post_new = Info.objects.create(
             title=request.data['title'],
             content=request.data['content'],
             category_id=request.data['category_id']
         )
-        return Response({'posts': model_to_dict(post_new)})
+        return Response({'posts': InfoSerializer(post_new).data})
