@@ -11,12 +11,20 @@ class Info(models.Model):
     is_published = models.BooleanField(default=True)
     category = models.ForeignKey('Category', on_delete=models.PROTECT, null=True)
 
+    class Meta:
+        verbose_name = 'Info'
+        verbose_name_plural = 'Info'
+
     def __str__(self):
         return self.title
 
 
 class Category(models.Model):
     name = models.CharField(max_length=128, db_index=True)
+
+    class Meta:
+        verbose_name = 'Category'
+        verbose_name_plural = 'Categories'
 
     def __str__(self):
         return self.name
