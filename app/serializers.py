@@ -8,6 +8,8 @@ from .models import Info
 
 
 class InfoSerializer(serializers.ModelSerializer):
+    user = serializers.HiddenField(default=serializers.CurrentUserDefault())
+
     class Meta:
         model = Info
         fields = "__all__"
