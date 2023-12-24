@@ -20,5 +20,6 @@ from app.views import InfoAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/v1/infolist/', InfoAPIView.as_view())
+    path('api/v1/infolist/', InfoAPIView.as_view()),
+    path('api/v1/infolist/<int:pk>/', InfoAPIView.as_view()),
 ]

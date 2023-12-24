@@ -20,10 +20,34 @@ class InfoAPIView(APIView):
     def post(self, request):
         serializer = InfoSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
+        serializer.save()
 
-        post_new = Info.objects.create(
-            title=request.data['title'],
-            content=request.data['content'],
-            category_id=request.data['category_id']
-        )
-        return Response({'posts': InfoSerializer(post_new).data})
+        return Response({'posts': serializer.data})
+
+    def put(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method PUT not allowed"})
+        try:
+            instance = Info.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object does not exists"})
+
+        serializer = InfoSerializer(data=request.data, instance=instance)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response({'posts': serializer.data})
+
+
+
+    def delete(self, request, *args, **kwargs):
+        pk = kwargs.get("pk", None)
+        if not pk:
+            return Response({"error": "Method PUT not allowed"})
+        try:
+            instance = Info.objects.get(pk=pk)
+        except:
+            return Response({"error": "Object does not exists"})
+
+        instance.delete()
+        return Response({'post': "delete post" + str(pk)})
