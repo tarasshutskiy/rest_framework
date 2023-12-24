@@ -1,5 +1,5 @@
 from django.forms import model_to_dict
-from rest_framework import generics
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 
 from .models import *
@@ -7,19 +7,38 @@ from .serializers import InfoSerializer
 from rest_framework.views import APIView
 
 
-class InfoAPIList(generics.ListCreateAPIView):
+class InfoViewSet(viewsets.ModelViewSet):
     queryset = Info.objects.all()
     serializer_class = InfoSerializer
 
 
-class InfoAPIUpdate(generics.UpdateAPIView):
-    queryset = Info.objects.all()
-    serializer_class = InfoSerializer
 
 
-class InfoAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
-    queryset = Info.objects.all()
-    serializer_class = InfoSerializer
+
+"""BASE GENERICS APIVIEWS"""
+# class InfoAPIList(generics.ListCreateAPIView):
+#     queryset = Info.objects.all()
+#     serializer_class = InfoSerializer
+#
+#
+# class InfoAPIUpdate(generics.UpdateAPIView):
+#     queryset = Info.objects.all()
+#     serializer_class = InfoSerializer
+#
+#
+# class InfoAPIDetailView(generics.RetrieveUpdateDestroyAPIView):
+#     queryset = Info.objects.all()
+#     serializer_class = InfoSerializer
+
+
+
+
+
+
+
+
+
+
 
 
 """BASE FUNCTION WE CAN CREATED"""
