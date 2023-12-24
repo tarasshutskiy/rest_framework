@@ -1,5 +1,6 @@
 from django.forms import model_to_dict
 from rest_framework import generics, viewsets
+from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from .models import *
@@ -8,9 +9,20 @@ from rest_framework.views import APIView
 
 
 class InfoViewSet(viewsets.ModelViewSet):
-    queryset = Info.objects.all()
+    # queryset = Info.objects.all()
     serializer_class = InfoSerializer
 
+    """Створення нестандартних маршрутів для - категорії"""
+    @action(methods=['get'], detail=True)
+    def category(self, request, pk=None):
+        cats = Category.objects.get(pk=pk)
+        return Response({'cats': cats.name})
+
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        if not pk:
+            return Info.objects.all()[:3]
+        return Info.objects.filter(pk=pk)
 
 
 
